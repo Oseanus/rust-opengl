@@ -28,26 +28,28 @@ fn main() {
     
     // Define vertex shader and fragment shader
     let vertex_shader_src = r#"
-        #version 140
+        #version 430
 
         in vec2 position;
-
+        out vec2 color_attribute;      // our new attribute
         uniform mat4 matrix;
 
         void main() {
+            color_attribute = position;     // we need to set the value of each `out` variable.
             gl_Position = matrix * vec4(position, 0.0, 1.0);
         }
-        "#;
+    "#;
         
-        let fragment_shader_src = r#"
-        #version 140
+    let fragment_shader_src = r#"
+        #version 430
 
+        in vec2 color_attribute;
         out vec4 color;
-
+        
         void main() {
-            color = vec4(1.0, 0.0, 0.0, 1.0);
+            color = vec4(color_attribute, 0.0, 1.0);   // we build a vec4 from a vec2 and two floats
         }
-        "#;
+    "#;
         
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
     
