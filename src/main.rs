@@ -23,9 +23,12 @@ fn main() {
         #version 430
 
         in vec2 position;
+        uniform float t;
 
         void main() {
-            gl_Position = vec4(position, 0.0, 1.0);
+            vec2 pos = position;
+            pos.x += t;
+            gl_Position = vec4(pos, 0.0, 1.0);
         }
     "#;
 
@@ -38,7 +41,13 @@ fn main() {
             color = vec4(1.0, 0.0, 0.0, 1.0);
         }
     "#;
-
+    
+    // Define vertice
+    let vertex1 = Vertex { position: [-0.5, -0.5] };
+    let vertex2 = Vertex { position: [ 0.0,  0.5] };
+    let vertex3 = Vertex { position: [ 0.5, -0.25] };
+    let shape = vec![vertex1, vertex2, vertex3];
+    let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
     
     let indices = glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList);
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
@@ -62,27 +71,20 @@ fn main() {
             },
             _ => return,
         }
-        
+
         let next_frame_time = Instant::now() + Duration::from_nanos(16_666_667);
         *control_flow = glutin::event_loop::ControlFlow::WaitUntil(next_frame_time);
-        
+
         // Update t
         t += 0.0002;
         if t > 0.5 {
             t = -0.5;
         }
-        
-        // Define vertice
-        let vertex1 = Vertex { position: [-0.5 + t, -0.5] };
-        let vertex2 = Vertex { position: [ 0.0 + t,  0.5] };
-        let vertex3 = Vertex { position: [ 0.5 + t, -0.25] };
-        let shape = vec![vertex1, vertex2, vertex3];
-        let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
-        
+
         // Draw triangle
         let mut target = display.draw();
         target.clear_color(0.0, 0.0, 1.0, 1.0);
-        target.draw(&vertex_buffer, &indices, &program, &glium::uniforms::EmptyUniforms,
+        target.draw(&vertex_buffer, &indices, &program, &uniform!{ t: t },
                     &Default::default()).unwrap();
         target.finish().unwrap();
     });
