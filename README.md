@@ -8,3 +8,4 @@ This repository is meant to be a playground for OpenGL with Rust. The library an
 3. Uniforms
 4. Matrices
 5. Adding Colors
+6. Adding Textures
