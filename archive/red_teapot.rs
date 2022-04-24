@@ -5,7 +5,7 @@ extern crate image;
 #[allow(unused_imports)]
 use glium::{glutin, Surface};
 
-mod teapot;
+mod teapot_chapter_7;
 
 fn main() {
     // 1. Create event_loop
@@ -46,10 +46,10 @@ fn main() {
         
     let program = glium::Program::from_source(&display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
-    // Load teapot data
-    let positions = glium::VertexBuffer::new(&display, &teapot::VERTICES).unwrap();
-    let normals = glium::VertexBuffer::new(&display, &teapot::NORMALS).unwrap();
-    let indices = glium::IndexBuffer::new(&display, glium::index::PrimitiveType::TrianglesList, &teapot::INDICES).unwrap();
+    // Load teapot_chapter_7 data
+    let positions = glium::VertexBuffer::new(&display, &teapot_chapter_7::VERTICES).unwrap();
+    let normals = glium::VertexBuffer::new(&display, &teapot_chapter_7::NORMALS).unwrap();
+    let indices = glium::IndexBuffer::new(&display, glium::index::PrimitiveType::TrianglesList, &teapot_chapter_7::INDICES).unwrap();
     
     // 5. Run event_loop infinitely
     let mut t: f32 = -0.5;
