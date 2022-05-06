@@ -11,3 +11,4 @@ This repository is meant to be a playground for OpenGL with Rust. The library an
 6. Adding Textures
 7. A more complex Shape
 8. Gouraud Shading
+9. Depth testing
