@@ -5,7 +5,7 @@ extern crate image;
 #[allow(unused_imports)]
 use glium::{glutin, Surface};
 
-mod teapot;
+mod teapot_chapter_7;
 
 fn main() {
     // 1. Create event_loop
