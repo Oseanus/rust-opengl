@@ -15,3 +15,4 @@ This repository is meant to be a playground for OpenGL with Rust. The library an
 10. Adjusting the perspective
 11. Backface culling
 12. The camera and summary of the vertex processing stages
+13. Blinn-phong shading
